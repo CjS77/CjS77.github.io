@@ -1,0 +1,14 @@
+<!--Nav column is 50% of screen width on all devices-->
+<nav class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
+    <ul class="nav">
+        <li class="active"><a href="#">Home</a></li>
+    </ul>
+    <h3>Posts </h3>
+    <ul class="nav">
+        {% for page in site.pages %}
+            {% if page.title %}
+                <a class="page-link" href="{{ page.url | prepend: site.baseurl }}">{{ page.title }}</a>
+            {% endif %}
+        {% endfor %}
+    </ul>
+</nav>

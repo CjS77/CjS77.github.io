@@ -1,0 +1,32 @@
+// Mixins
+
+.transition-all() {
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    transition: all 0.5s;
+}
+
+.background-cover() {
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
+.serif() {
+	font-family: 'Times New Roman', serif;
+}
+
+.sans-serif () {
+	font-family: Raleway, Helvetica, Arial, sans-serif;
+}
+
+.brand-font() {
+    font-family: Syncopate, Raleway, Helvetica, Arial, sans-serif;
+}
+
+.box-shadow(@x: 0; @y: 0; @blur: 1px; @color: #0001) {
+    -webkit-box-shadow: @arguments;
+    -moz-box-shadow: @arguments;
+    box-shadow: @arguments;
+}
