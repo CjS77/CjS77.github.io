@@ -3,6 +3,7 @@ layout: post
 title:  "How I set up this blog"
 date:   2015-04-01
 categories: jekyll blog
+author: Cayle Sharrock
 ---
 
 # Setup
@@ -34,6 +35,11 @@ The next thing to do is tweak the default settings of the Clean Blog theme:
   - Replace the stock images for the *About* and *Home* pages in `img/about-bg.jpg` and `img/home-bg.jpg`. These
     images are 1900 x 492. Use Gimp to create replacements and use a high compression factor to keep the image
     sizes small (~40kB).
+    
+{:note: .note}
+<div class="note" markdown='1'>
+Edit: The background pictures are actually cropped to 412 pixels high.
+</div>
     
 ### Fonts and aesthetics
 
