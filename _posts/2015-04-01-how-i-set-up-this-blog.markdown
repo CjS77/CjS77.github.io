@@ -97,3 +97,24 @@ and updated `head.html` accordingly.
 
 I replaced the default `about.html` file with `about.md`. I prefer using markdown and Jekyll will automatically
 generate HTML from it.
+
+# Setting up SSH authentication
+
+Typing in your username/password each time you push is a pain. Using SSH authentication, you can establish a trust 
+connection between your computer and GitHub, so that this doesn't have to happen every time.
+
+## Create SSH keys
+If you don't already have SSH keys, follow the steps [here](https://help.github.com/articles/generating-ssh-keys/) to set them up.
+
+Once your public key is added to GitHub, you still need to tell git to use the keys instead of your password for authentication.
+This is done as follows:
+
+  1. Get the remote repository name with `git remote -v`
+
+          origin   https://github.com/YourUserName/YourRepo.git (fetch)
+          origin   https://github.com/YourUserName/YourRepo.git (push)
+
+  2. Change this to use ssh keys with the following: `git remote set-url origin git@github.com:YourUserName/YourRepo.git`
+
+Done! You can check that the remote url has indeed changed by typing `git remote -v` again.
+    
