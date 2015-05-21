@@ -49,7 +49,7 @@ at least on a 8GB system.
   2. Run `gulp` to run the default task    
   3. Open a browser at <http://localhost:3000> and you should see the basic scaffolding
   
-![Default mean.io app](/img/kue-homepage-scaffold.png)
+![Default mean.io app](/img/kue-homepage-scaffold.jpg)
 
 # Looking around
 
