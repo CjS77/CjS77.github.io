@@ -9,7 +9,7 @@ categories: jekyll git
 
 # The problem
 
-I'm using [jekyll] to write my company's website (in addition to this blog). I'm using [git] to manage the content 
+I'm using [jekyll] to write my [company's website](http://nimbustech.biz) (in addition to this blog). I'm using [git] to manage the content 
 revisions, naturally, but since it's a private repository, I'm not using github pages to keep the website and the 
 site content in the repo synchronised.
 
