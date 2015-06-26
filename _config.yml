@@ -7,7 +7,7 @@ baseurl: ""
 url: "http://nimbustech.biz"
 twitter_username: caylesharrock
 github_username:  CjS77
-facebook_username:  Cayle.Sharrock
+website:  "http://nimbustech.biz"
 
 # Build settings
 markdown: kramdown

@@ -4,7 +4,7 @@ title:  "Thoughts on Angular Controllers"
 date:   2015-06-07
 header-img: img/angular_backdrop.svg
 author: Cayle Sharrock
-categories: jekyll git 
+categories: angular
 ---
 
 # Things that ocurred to me while developing my first Angular-based front end
