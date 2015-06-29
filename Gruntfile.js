@@ -50,8 +50,8 @@ module.exports = function(grunt) {
                 files: ['js/<%= pkg.name %>.js'],
                 tasks: ['uglify'],
                 options: {
-                    spawn: false,
-                },
+                    spawn: false
+                }
             },
             less: {
                 files: ['less/*.less'],
@@ -59,8 +59,8 @@ module.exports = function(grunt) {
                 options: {
                     spawn: false,
                 }
-            },
-        },
+            }
+        }
     });
 
     // Load the plugins.
