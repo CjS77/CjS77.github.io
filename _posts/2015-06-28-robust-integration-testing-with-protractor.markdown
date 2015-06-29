@@ -1,8 +1,8 @@
 ---
 layout: post
-title:  "Robust Prtractor tests using State Objects"
+title:  "Robust Protractor tests using State Objects"
 date:   2015-06-28
-header-img: img/blackboard_banner.jpg
+header-img: img/blackboard-banner.jpg
 author: Cayle Sharrock
 categories: angular
 ---
