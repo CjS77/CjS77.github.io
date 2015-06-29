@@ -1,3 +1,12 @@
+---
+layout: post
+title:  "Robust Prtractor tests using State Objects"
+date:   2015-06-28
+header-img: img/blackboard_banner.jpg
+author: Cayle Sharrock
+categories: angular
+---
+
 # AngularJS unit testing
 
 AngularJS ships with [Protractor](https://angular.github.io/protractor/#/), which purports to make integrated, or end-to-end testing easy.
@@ -87,7 +96,7 @@ rather than a partial implementation
 ### Why do this?
 
 1. Again, all UI interactions are kept in one place. So changes to Protractor (or if you decide to change testing environment in the future) mean you only have to edit one file; and in theory your tests don't have to be touched.
-2. You'll often find that what starts out as a simple one-liner (`..isDisplayed()) can end up being more tricky when you discover that you have to wait for animations, do some other checks and so on. The *logical* concept of having the login button hidden can be encapsulated in the page object along with all the other details and tricks you need to pummel Protractor with to capture the User concept of "The login button is hidden".
+2. You'll often find that what starts out as a simple one-liner (`..isDisplayed()`) can end up being more tricky when you discover that you have to wait for animations, do some other checks and so on. The *logical* concept of having the login button hidden can be encapsulated in the page object along with all the other details and tricks you need to pummel Protractor with to capture the User concept of "The login button is hidden".
 
 
 ## Code-reuse is encouraged
@@ -115,7 +124,7 @@ used in multiple places
         ...
         expect(myAccountPage.navbar.isLoginButtonVisible()).toBe(false);
 
-# State objects
+# State Objects
 
 Page Objects play a key role in abstracting away the low-lvel UI driving stuff,
 but I still found my integration tests to be quite brittle and a pain-in-the-ass
@@ -124,13 +133,13 @@ suddenly everything fell into place.
 
 The article is pretty accessible, and goes into great detail, so I'll summarise the key points of that article, and highlight some twists to their approach that I have found useful.
 
-## Web application state
+## State Transition Networks
 
 The idea of a State Object is one that describes the uh, *state* of your interface in a given situation, as well as the allowable transitions that will trigger a state change.
 
 To see the State Object in action, it's best to look at a State-Transition-Network diagram such as The one in Figure 1 below:
 
-![Figure 1. State Transition Network]("img/login-network.png")
+![Figure 1. State Transition Network](/img/login-network.png)
 
 In this example, when you first load up the website, you're at the landing page. You might expect the following statements to hold:
 
@@ -154,7 +163,7 @@ A full-blown application will have more complicated STNs, but because SOs are so
 {:note: .note}
 
 <div class="note" markdown='1'>
-There are a few more "special cases" outlined in the [original paper][2] on State Objects, but besides the *conditional triggers* that I'll get into below, these are really just notational sugar on the same simple idea.
+There are a few more "special cases" outlined in the [original paper][2] on State Objects, but besides the *conditional triggers*, these are really just notational sugar on the same simple idea. And conditional triggers are methods that apply some logic to decide which state one ends in.
 </div>
 
 What makes the State Object approach so neat is that I described the states in natural language, but it's really straightforward to translate this into code.
@@ -164,7 +173,7 @@ To manage this, each state object does two things
 1. It has a `selfCheck` method (referred to as an *inspection method*) that uses
 assertions to test the statements that describe the state.
 2. It has a set of methods that transition from the current state to another state (referred to as *trigger methods*).
-3. An entry point into the STN via a State (e.g. hitting the page from the base URL) is generally called `get`.
+3. An entry point into the STN from outside (e.g. hitting the page from the base URL) is generally implemented in a method called `get`.
 
 Each scenario in the integration test suite then does little more than trace a path through a set of states, calling the `selfCheck` method on each one to ensure that we are indeed in the state as defined in the SO.
 
