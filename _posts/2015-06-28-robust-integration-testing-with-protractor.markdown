@@ -206,15 +206,15 @@ Let's look at how the *Landing Page* state object code might look.
 First of all, our Landing Page consists of the Nav Bar as well as the main page. So first we create instances of the relevant Page Objects:
 
 		//Create a model of the UI using Page Objects
-		function PublicState() {
+		function LandingPageState() {
 		   this.topNav = require('../pageObjects/topNavBar.po.js');
 		   this.main = require('../pageObjects/dashBoard.po.js');
 		}
 
-Since the Landing Page State is an entry point into the STN, we also define a `get` method that lauches the initial state.
+Since the Landing Page State is an entry point into the STN, we also define a `get` method that launches the initial state.
 
 		//This State Object has an entry point, so we define a GET method
-		PublicState.prototype.get = function() {
+		LandingPageState.prototype.get = function() {
 			//This is a little naughty. I should really have a homepage.po.js file that defines a loadPage method.
 			//because UI interactions should live in POs, but I'll break my own rules in the interest of brevity.
 			return browser.get('/', 1000);
@@ -223,14 +223,14 @@ Since the Landing Page State is an entry point into the STN, we also define a `g
 We then define the transition methods that are available from this state. In this example, there is just one: Log in.
 
 		//This is a trigger method to another state
-		PublicState.prototype.login = function() {
+		LandingPageState.prototype.login = function() {
 			return topNavBar.loginBtn.click();
 		};
 
 Then, we write the assertions that test that the current state is the desired state. This is done in the `selfCheck` method. Notice that by employing Page Objects, the code is very similar to the natural language check list we wrote above.
 
 		//All State Object should have this method that tests whether we are in fact in the desired state
-		PublicState.prototype.selfCheck = function() {
+		LandingPageState.prototype.selfCheck = function() {
 			var self = this;
 			browser.sleep(1000).then(function() {
 				//Note: Jasmine automatically resolves promises, so even though topNav.getXXXX returns a promise, you can
@@ -238,6 +238,7 @@ Then, we write the assertions that test that the current state is the desired st
 				expect(self.topNav.isLoginLinkVisible()).toBe(true);
 				expect(self.topNav.isLogoutLinkVisible()).toBe(false);
 				expect(self.main.isContainerVisible()).toBe(true);
+                expect(self.main.containerColor()).toBe(gray);
 			});
 		};
 
@@ -263,7 +264,7 @@ The test scenarios now just string a bunch of states together using the trigger 
                 landingPageState.login().then(function() {
                     loggedInState.selfCheck();
                     loggedInState.logout().then(function() {
-						publicState.selfCheck();
+						LandingPageState.selfCheck();
 					});
                 });
             });
