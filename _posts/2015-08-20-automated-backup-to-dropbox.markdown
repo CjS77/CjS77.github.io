@@ -152,7 +152,7 @@ The script is based on the sample script in `/usr/share/doc/rsnapshot/examples/u
     TAR_DIR="/var/backups/toDropbox" # <-- CHANGE THIS
     SNAPSHOT_DIR="/var/backups"      # <-- CHANGE THIS
     DropBoxFolder=my-backups         # <-- CHANGE THIS
-
+    uploader=/usr/local/bin/dropbox_uploader.sh   # <- check this
     # SHELL COMMANDS
     DATE=`/bin/date +%Y-%m-%d`
 
@@ -160,9 +160,9 @@ The script is based on the sample script in `/usr/share/doc/rsnapshot/examples/u
     # the e-mail address the notification is being sent to must have their GPG key
     # in the public keyring of the user running this backup
     #
-    GPG="/usr/bin/openssl"          # <-- Comemnt this out to have unencrypted tarballs
+    GPG="/usr/bin/openssl"          # <-- Comment this out to have unencrypted tarballs
     #The PUBLIC key to encrypt data with
-    key="/home/${USER}/.ssh/key.bin"  
+    key="/home/cayle/.ssh/key.bin"  # <-- CHANGE THIS
     mkdir -p ${TAR_DIR}
     echo "" > ${TAR_DIR}/backup.log
 
@@ -191,7 +191,7 @@ The script is based on the sample script in `/usr/share/doc/rsnapshot/examples/u
     done
 
     echo "Uploading backups to Dropbox"
-    sudo -u ${USER} dropbox_uploader.sh upload ${TAR_DIR}/* ${DropBoxFolder}/
+    sudo -u cayle $uploader upload ${TAR_DIR}/* ${DropBoxFolder}/            # <- CHANGE USER
     echo "Done"
 
     cd -
@@ -206,4 +206,6 @@ Tack the following line on the `/etc/cron.d/rsnapshot` file you edited above:
 ## Final notes
 
 1. The Dropbox backups do NOT make use of incremental backups, so watch your quota if you're keeping many backups.
-
+2. To *unencrypt* an encrypted tarball run `gunzip --stdout FILENAME.tar.enc.gz | openssl enc -d -aes-256-cbc -pass file:/path/to/key.bin | tar -xv`
+  This command first unzip the tarball, sending the ecrypted stream to openssl. which decrypts the data using the password you generated earlier. 
+  The decrypted data is then passed to tar which will extract it to disk. use `tar -tv` to test that a tarball is properly encrypted.
