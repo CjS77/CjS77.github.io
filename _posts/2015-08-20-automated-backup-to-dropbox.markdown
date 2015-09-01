@@ -133,7 +133,7 @@ Create a random password that will be used to encrypt your backups:
 Save the following script to `/usr/local/bin`, changing the variables to match your needs.
 The script is based on the sample script in `/usr/share/doc/rsnapshot/examples/utils/rsnaptar`. Make it executable as well using `sudo chmod +x /usr/local/bin/rsnaptar`
 
-    #!/bin/bash
+#!/bin/bash
 
     ##############################################################################
     # rsnaptar
@@ -143,29 +143,26 @@ The script is based on the sample script in `/usr/share/doc/rsnapshot/examples/u
     # snapshot root. 
     # 
     # Uploads tarball to DropBox when done
-    #
     # http://nimbustech.biz/
     ##############################################################################
-
+    
     umask 0022
     # DIRECTORIES
-    TAR_DIR="/var/backups/toDropbox" # <-- CHANGE THIS
-    SNAPSHOT_DIR="/var/backups"      # <-- CHANGE THIS
-    DropBoxFolder=my-backups         # <-- CHANGE THIS
-    uploader=/usr/local/bin/dropbox_uploader.sh   # <- check this
+    TAR_DIR="/var/backups/toDropbox"              # Location of archives
+    SNAPSHOT_DIR="/var/backups"                   # Location of snapshots
+    USER=myusername                               # <-- CHANGE USER NAME
+    
     # SHELL COMMANDS
     DATE=`/bin/date +%Y-%m-%d`
-
+    uploader=/usr/local/bin/dropbox_uploader.sh
+    
     # uncomment this to encrypt files
-    # the e-mail address the notification is being sent to must have their GPG key
-    # in the public keyring of the user running this backup
-    #
-    GPG="/usr/bin/openssl"          # <-- Comment this out to have unencrypted tarballs
+    GPG="/usr/bin/openssl"
     #The PUBLIC key to encrypt data with
-    key="/home/cayle/.ssh/key.bin"  # <-- CHANGE THIS
+    key="/home/$USER/.ssh/key.bin"                
     mkdir -p ${TAR_DIR}
     echo "" > ${TAR_DIR}/backup.log
-
+    
     for freq in daily weekly monthly; do
       for i in {0..6}; do
         dest=${freq}.${i}
@@ -191,14 +188,16 @@ The script is based on the sample script in `/usr/share/doc/rsnapshot/examples/u
     done
 
     echo "Uploading backups to Dropbox"
-    sudo -u cayle $uploader upload ${TAR_DIR}/* ${DropBoxFolder}/            # <- CHANGE USER
+    sudo -iu $USER $uploader upload ${TAR_DIR}/* jeeves_backups/          
     echo "Done"
-
+    
     cd -
+
 
 ### Schedule the upload
 
-Tack the following line on the `/etc/cron.d/rsnapshot` file you edited above:
+Tack the following line on the `/etc/cron.d/rsnapshot` file you edited above. This will upload the files to DropBox
+every morning at 2am:
 
      0  2   * * *           root    /usr/local/bin/rsnaptar
 
