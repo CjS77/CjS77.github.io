@@ -133,8 +133,7 @@ Create a random password that will be used to encrypt your backups:
 Save the following script to `/usr/local/bin`, changing the variables to match your needs.
 The script is based on the sample script in `/usr/share/doc/rsnapshot/examples/utils/rsnaptar`. Make it executable as well using `sudo chmod +x /usr/local/bin/rsnaptar`
 
-#!/bin/bash
-
+    #!/bin/bash
     ##############################################################################
     # rsnaptar
     # by Cayle Sharrock
